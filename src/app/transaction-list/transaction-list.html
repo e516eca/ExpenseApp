@@ -1,0 +1,63 @@
+<div class="container-fluid px-4">
+    <div class="row g-4 mb-4">
+        <div class="card h-100 bg-success bg-opacity-75 text-white"> 
+            <div class="card-body">
+                <h5 class="card-title">Total Income</h5>
+                <h3 class="card-text">{{ getTotalIncome() | currency }}</h3>
+            </div>
+        </div>
+         
+
+        <div class="card h-100 bg-danger bg-opacity-75 text-white" [ngClass]="getNetBalance() >= 0 ? 'bg-success' : 'bg-danger'"> 
+            <div class="card-body">
+                <h5 class="card-title">Total Expenses</h5>
+                <h3 class="card-text fw-bold">{{ getTotalExpense() | currency }}</h3>
+            </div>
+        </div>
+         
+   
+        <div class="card h-100 bg-success bg-opacity-75 text-white"> 
+            <div class="card-body">
+                <h5 class="card-title">Net Balance</h5>
+                <h3 class="card-text">{{ getNetBalance() | currency }}</h3>
+            </div>
+        </div>
+         
+
+
+    </div>
+
+    <h3>Transactions</h3>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead classs="table-light">
+                <tr>
+                    <th style="width: 15%;">Date</th>
+                    <th style="width: 15%;">Type</th>                
+                    <th style="width: 25%;">Category</th>
+                    <th style="width: 20%;">Amount</th>
+                    <th style="width: 15%;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+             @for (trans of transactions(); track trans.id) {
+                <tr>
+                     <td>{{trans.createdAt | date}}  </td>
+                 
+                    <td [ngClass]="trans.type == 'Income' ? 'text-success' : 'text-danger'"> {{trans.type}} </td>
+                      <td>{{trans.category}}</td>
+                    <td [ngClass]="trans.type == 'Income' ? 'text-success' : 'text-danger'"> {{trans.amount | currency}} </td>
+                    <td>
+                       <button
+                        class="btn btn-sm btn-outline-primary me-1" 
+                        (click)="editTransaction(trans)">
+                        <i class="bi bi-pencil"></i>
+                        Edit</button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+
+ 
+</div>
